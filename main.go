@@ -18,9 +18,10 @@ func main() {
 	}
 
 	pi := raspi.NewRaspiAdaptor("raspi")
-	pin := gpio.NewDirectPinDriver(pi, "pin", "24")
+	pin := gpio.NewDirectPinDriver(pi, "pin", "18")
 
 	work := func() {
+		log.Info("Work")
 		level := byte(1)
 
 		gobot.Every(1*time.Second, func() {
