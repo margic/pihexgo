@@ -11,14 +11,14 @@ import (
 
 func main() {
 	log.Info("Starting PiHexGo")
-
+	pinNum := "18"
 	gbot := gobot.NewGobot()
 	if gbot == nil {
 		log.Fatal("Unable to get Gobot")
 	}
 
 	pi := raspi.NewRaspiAdaptor("raspi")
-	pin := gpio.NewDirectPinDriver(pi, "pin", "18")
+	pin := gpio.NewDirectPinDriver(pi, "pin", pinNum)
 
 	work := func() {
 		log.Info("Work")
@@ -26,6 +26,10 @@ func main() {
 
 		gobot.Every(1*time.Second, func() {
 			pin.DigitalWrite(level)
+			log.WithFields(log.Fields{
+				"pin":   pinNum,
+				"level": level,
+			}).Info("Work")
 			if level == 1 {
 				level = 0
 			} else {
